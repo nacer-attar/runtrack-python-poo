@@ -31,11 +31,12 @@ class Joueur:
         self.total += Jeu.valeurs[carte.valeur]
         
     def afficher_main(self):
-        print(f"Main de {self.nom}:")
-        for carte in self.main:
-            print(f"{carte.valeur} de {carte.couleur}")
-        print(f"Total: {self.total}")
-        
+        if self.nom == 'Joueur'   :
+            print(f"Main de {self.nom}:")
+            for carte in self.main:
+                print(f"{carte.valeur} de {carte.couleur}")
+            print(f"Total: {self.total}")
+            
 class Blackjack:
     def __init__(self):
         self.jeu = Jeu()
@@ -47,14 +48,14 @@ class Blackjack:
         self.joueur.ajouter_carte(self.jeu.donner_carte())
         self.croupier.ajouter_carte(self.jeu.donner_carte())
         self.joueur.ajouter_carte(self.jeu.donner_carte())
-        self.croupier.ajouter_carte(self.jeu.donner_carte(hidden=False))
+        self.croupier.ajouter_carte(self.jeu.donner_carte())
         
         self.joueur.afficher_main()
         self.croupier.afficher_main()
 
         while self.joueur.total < 21:
             choix = input("Voulez-vous prendre une carte ? (o/n) ")
-            if choix.lower() == "o":
+            if choix.lower() == "o" or "":
                 self.joueur.ajouter_carte(self.jeu.donner_carte())
                 self.joueur.afficher_main()
             else:
@@ -65,13 +66,13 @@ class Blackjack:
         self.croupier.afficher_main()
 
         if self.joueur.total > 21:
-            print("Vous avez perdu.")
+            print("\033[31mVous avez perdu.\033[0m")
         elif self.croupier.total > 21:
-            print("Le croupier a perdu.")
+            print("\033[32mVous avez gagné !\033[0m")
         elif self.joueur.total > self.croupier.total:
-            print("Vous avez gagné !")
+            print("\033[32mVous avez gagné !\033[0m")
         elif self.joueur.total < self.croupier.total:
-            print("Le croupier a gagné.")
+            print("\033[31mVous avez perdu.\033[0m")
         else:
             print("Égalité.")
         
